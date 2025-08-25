@@ -9,17 +9,26 @@
   "features": {
     "ghcr.io/devcontainers/features/docker-in-docker:2": {}
   },  
-  "customizations": {    
-    "vscode": {
-      "extensions": [
-          "ms-azuretools.vscode-docker",
-          "ms-python.python",
-          "ms-toolsai.jupyter",
-          "analytic-signal.preview-pdf",
-          "ms-python.vscode-pylance",
-          "ms-python.autopep8"
-      ]
-    }
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"ms-toolsai.jupyter",
+				"ms-azuretools.vscode-docker",
+				"ms-python.autopep8",
+				"ms-python.pylint",
+				"analytic-signal.preview-pdf",
+				"grapecity.gc-excelviewer",
+				"github.copilot",
+				"github.copilot-chat",
+				"mechatroner.rainbow-csv"
+			],
+			"settings": {
+				"workbench.colorTheme": "Default Dark+",
+				"editor.rulers": [80],
+				"workbench.iconTheme": "vs-seti"
+			}
+		}
   },
   "mounts": [
     "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
