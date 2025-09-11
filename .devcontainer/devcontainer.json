@@ -1,8 +1,5 @@
 {
   "name": "Python with PostgreSQL & pgAdmin",
-  "build": { "dockerfile": "Dockerfile" },
-  "workspaceFolder": "/workspace",
-  "forwardPorts": [5050],
   "customizations": {
     "vscode": {
       "extensions": [
@@ -24,9 +21,5 @@
       }
     }
   },
-  "mounts": [
-    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
-  ],
-  "postCreateCommand": "pip install -r requirements.txt",
-  "remoteUser": "root"
+  "postCreateCommand": "pip install -r requirements.txt"
 }
