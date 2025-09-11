@@ -2,12 +2,10 @@
 
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
-- [File structure](#file-structure)
+- [Folder structure](#folder-structure)
 - [Run Docker containers](#run-docker-containers)
 - [Database credentials](#database-credentials)
-- [Import OSM data](#import-osm-data)
-- [Register Server](#register-server)
-- [Make SQL Queries](#make-sql-queries) 
+- [License and Credits](#license-and-credits)
 
 ## Folder Structure
 ```
@@ -20,11 +18,11 @@
 │  ├─ Northwind_Database.xlsx
 │  └─ *.csv (Northwind tables)
 ├─ SQL/
-│  └─ init-db.sql             # Schema and initial objects
 ├─ docker-compose.yml          # Defines PostgreSQL & pgAdmin services
 ├─ Dockerfile                  # Custom image setup
+├─ init-db.sql                 # Initial db objects
 ├─ requirements.txt            # Python dependencies
-├─ *.ipynb                     # Jupyter notebooks (data loading/analysis)
+├─ *.ipynb                     # Jupyter notebooks
 ├─ .gitignore                  # Git ignore rules
 └─ README.md                   # Documentation (this file)
 ```
@@ -43,7 +41,7 @@ Username: pgadmin
 Password: geheim
 ```
 
-## License & Credits
+## License and credits
 This project is intended for educational/demo purposes.   
 Sample data includes public datasets such as *Northwind*.   
 Please verify licenses if using in other contexts.  
