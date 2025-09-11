@@ -11,8 +11,27 @@ services:
         condition: service_healthy
     networks: [devnet]
 
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: geheim
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks: [devnet]
+    # ports:
+    #   - "5432:5432"
+
   pgadmin:
-    image: dpage/pgadmin4:8.11
+    image: dpage/pgadmin4:9.7
     restart: unless-stopped
     environment:
       PGADMIN_DEFAULT_EMAIL: pgadmin@gmail.com
@@ -29,23 +48,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    networks: [devnet]
-
-  db:
-    image: postgres:16-bookworm
-    restart: unless-stopped
-    environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: geheim
-    volumes:
-      - pg-data:/var/lib/postgresql/data
-      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB || exit 1"]
-      interval: 5s
-      timeout: 3s
-      retries: 10
     networks: [devnet]
 
 volumes:
