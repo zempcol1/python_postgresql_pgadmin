@@ -18,6 +18,7 @@
 │  ├─ Northwind_Database.xlsx
 │  └─ *.csv (Northwind tables)
 ├─ SQL/
+│  ├─ *.sql                    # SQL queries
 ├─ docker-compose.yml          # Defines PostgreSQL & pgAdmin services
 ├─ Dockerfile                  # Custom image setup
 ├─ init-db.sql                 # Initial db objects
