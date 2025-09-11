@@ -1,34 +1,39 @@
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: sleep infinity
-    depends_on:
-      db:
-        condition: service_healthy
-    networks: [devnet]
-
   db:
     image: postgres:16
+    restart: unless-stopped
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: geheim
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+    # ports:
+    #   - "5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB || exit 1"]
       interval: 5s
       timeout: 3s
       retries: 10
-    networks: [devnet]
 
   pgadmin:
     image: dpage/pgadmin4:9.7
-    ports: ["5050:80"]
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: geheim
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+      - ./.devcontainer/servers.json:/pgadmin4/servers.json:ro
+    ports:
+      - "5050:80"
     depends_on:
       db:
         condition: service_healthy
-    networks: [devnet]
 
-networks:
-  devnet: {}
+volumes:
+  db_data:
+  pgadmin_data:
