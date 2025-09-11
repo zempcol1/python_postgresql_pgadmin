@@ -1,43 +1,56 @@
 services:
-
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - ./:/workspace:cached
     command: sleep infinity
-    network_mode: service:db
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    networks: [devnet]
 
   pgadmin:
-    image: dpage/pgadmin4:latest
-    restart: always
+    image: dpage/pgadmin4:8.11
+    restart: unless-stopped
     environment:
       PGADMIN_DEFAULT_EMAIL: pgadmin@gmail.com
       PGADMIN_DEFAULT_PASSWORD: geheim
-      PGADMIN_CONFIG_WTF_CSRF_HEADERS: '["Referer", "Origin"]'
-      PGADMIN_CONFIG_WTF_CSRF_ENABLED: 'False'   
+      PGADMIN_CONFIG_WTF_CSRF_HEADERS: '["Referer","Origin"]'
+      PGADMIN_CONFIG_WTF_CSRF_ENABLED: 'False'
       PGADMIN_CONFIG_SERVER_MODE: 'False'
       PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
     volumes:
       - pgadmin-data:/var/lib/pgadmin
-      - ./.devcontainer/servers.json:/pgadmin4/servers.json
+      - ./.devcontainer/servers.json:/pgadmin4/servers.json:ro
     ports:
-      - 5050:80
+      - "5050:80"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    networks: [devnet]
 
   db:
-    image: postgres:latest
-    restart: always          
+    image: postgres:16-bookworm
+    restart: unless-stopped
     environment:
       POSTGRES_DB: postgres
-      POSTGRES_USER: pgadmin
+      POSTGRES_USER: admin
       POSTGRES_PASSWORD: geheim
-    volumes:                 
+    volumes:
       - pg-data:/var/lib/postgresql/data
-      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks: [devnet]
 
 volumes:
   pgadmin-data:
   pg-data:
+
+networks:
+  devnet: {}
