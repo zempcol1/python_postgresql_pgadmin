@@ -1,12 +1,13 @@
 # Python + PostgreSQL + pgAdmin
 
-## Purpose
-This repository provides a **learning and demo environment** for working with **PostgreSQL** and **pgAdmin**.
-
-It is intended for:
-- Practicing SQL and database fundamentals  
-- Loading and analyzing example datasets from CSV files  
-- Reproducible experiments in Jupyter Notebooks – isolated inside Docker/VS Code Dev Containers  
+## Table of Contents
+- [Table of Contents](#table-of-contents)
+- [File structure](#file-structure)
+- [Run Docker containers](#run-docker-containers)
+- [Database credentials](#database-credentials)
+- [Import OSM data](#import-osm-data)
+- [Register Server](#register-server)
+- [Make SQL Queries](#make-sql-queries) 
 
 ## Folder Structure
 ```
@@ -26,6 +27,20 @@ It is intended for:
 ├─ *.ipynb                     # Jupyter notebooks (data loading/analysis)
 ├─ .gitignore                  # Git ignore rules
 └─ README.md                   # Documentation (this file)
+```
+
+## Run Docker containers
+```bash
+VS Code -> left Menu -> search file 'docker-compose.yml' -> right click -> Compose Up
+```
+
+## Database credentials
+```bash
+Host: db
+Port: 5432
+Maintenance database: postgres
+Username: pgadmin
+Password: geheim
 ```
 
 ## License & Credits
