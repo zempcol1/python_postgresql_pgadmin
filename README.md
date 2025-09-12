@@ -13,12 +13,13 @@
 ├─ .devcontainer/
 │  ├─ devcontainer.json       # VS Code Dev Container config
 │  └─ servers.json            # Pre-configured connection to PostgreSQL
+
 ├─ Data/                      # CSV and Excel sample datasets
 │  ├─ apartments_data_prepared.csv
 │  ├─ Northwind_Database.xlsx
 │  └─ *.csv (Northwind tables)
 ├─ SQL/
-│  ├─ *.sql                    # SQL queries
+│  └─ *.sql                    # SQL queries
 ├─ docker-compose.yml          # Defines PostgreSQL & pgAdmin services
 ├─ Dockerfile                  # Custom image setup
 ├─ init-db.sql                 # Initial db objects
